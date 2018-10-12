@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.byk.rong.mapper.read.EmailReadMapper">
+  <resultMap id="BaseResultMap" type="com.byk.rong.entity.Email">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="sender" jdbcType="VARCHAR" property="sender" />
+    <result column="receiver" jdbcType="VARCHAR" property="receiver" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="mailBody" jdbcType="VARCHAR" property="mailbody" />
+    <result column="sendTime" jdbcType="TIMESTAMP" property="sendtime" />
+    <result column="isSuccess" jdbcType="INTEGER" property="issuccess" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, userId, sender, receiver, subject, mailBody, sendTime, isSuccess
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from email
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="list" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from email
+    <where>
+      <if test="id != null and id != ''"> and id = #{id} </if>
+      <if test="userid != null and userid != ''"> and userId = #{userid} </if>
+      <if test="sender != null and sender != ''"> and sender = #{sender} </if>
+      <if test="receiver != null and receiver != ''"> and receiver = #{receiver} </if>
+      <if test="subject != null and subject != ''"> and subject = #{subject} </if>
+      <if test="mailbody != null and mailbody != ''"> and mailBody = #{mailbody} </if>
+      <if test="sendtime != null and sendtime != ''"> and sendTime = #{sendtime} </if>
+      <if test="issuccess != null and issuccess != ''"> and isSuccess = #{issuccess} </if>
+    </where>
+    <choose>
+      <when test="sort != null and sort.trim() != ''">
+        order by ${sort} ${order}
+      </when>
+      <otherwise>
+        order by sendTime
+      </otherwise>
+    </choose>
+    <if test="offset != null and limit != null">
+      limit ${offset},${limit}
+    </if>
+  </select>
+  <select id="count" resultType="int">
+    select count(*) from email
+    <where>
+      <if test="id != null and id != ''"> and id = #{id} </if>
+      <if test="userid != null and userid != ''"> and userId = #{userid} </if>
+      <if test="sender != null and sender != ''"> and sender = #{sender} </if>
+      <if test="receiver != null and receiver != ''"> and receiver = #{receiver} </if>
+      <if test="subject != null and subject != ''"> and subject = #{subject} </if>
+      <if test="mailbody != null and mailbody != ''"> and mailBody = #{mailbody} </if>
+      <if test="sendtime != null and sendtime != ''"> and sendTime = #{sendtime} </if>
+      <if test="issuccess != null and issuccess != ''"> and isSuccess = #{issuccess} </if>
+    </where>
+  </select>
+
+</mapper>

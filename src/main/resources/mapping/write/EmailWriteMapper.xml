@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.byk.rong.mapper.write.EmailWriteMapper">
+  <resultMap id="BaseResultMap" type="com.byk.rong.entity.Email">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="sender" jdbcType="VARCHAR" property="sender" />
+    <result column="receiver" jdbcType="VARCHAR" property="receiver" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="mailBody" jdbcType="VARCHAR" property="mailbody" />
+    <result column="sendTime" jdbcType="TIMESTAMP" property="sendtime" />
+    <result column="isSuccess" jdbcType="INTEGER" property="issuccess" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, userId, sender, receiver, subject, mailBody, sendTime, isSuccess
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from email
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.byk.rong.entity.Email">
+    insert into email (id, userId, sender, 
+      receiver, subject, mailBody, 
+      sendTime, isSuccess)
+    values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{sender,jdbcType=VARCHAR}, 
+      #{receiver,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{mailbody,jdbcType=VARCHAR}, 
+      #{sendtime,jdbcType=TIMESTAMP}, #{issuccess,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.byk.rong.entity.Email">
+    <selectKey keyProperty="id" resultType="string" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into email
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="sender != null">
+        sender,
+      </if>
+      <if test="receiver != null">
+        receiver,
+      </if>
+      <if test="subject != null">
+        subject,
+      </if>
+      <if test="mailbody != null">
+        mailBody,
+      </if>
+      <if test="sendtime != null">
+        sendTime,
+      </if>
+      <if test="issuccess != null">
+        isSuccess,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="sender != null">
+        #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null">
+        #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null">
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="mailbody != null">
+        #{mailbody,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null">
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issuccess != null">
+        #{issuccess,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

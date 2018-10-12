@@ -1,0 +1,39 @@
+server:
+  port: 8887
+
+spring:
+  datasource:   #读写分离配置数据源
+    thirdRead:
+      url: jdbc:mysql://123.206.78.174:3306/rong_third?characterEncoding=utf-8
+      username: root
+      password: 1234
+      driver-class-name: com.mysql.jdbc.Driver
+    thirdWrite:
+      url: jdbc:mysql://123.206.78.174:3306/rong_third?characterEncoding=utf-8
+      username: root
+      password: 1234
+      driver-class-name: com.mysql.jdbc.Driver
+# 邮件配置
+  mail:
+    host: smtp.qq.com
+    username: zhizihoumen@qq.com
+    password: ppfvbgexmidnbefg
+    default-encoding: UTF-8
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true    
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mapping/rong/**/**/*Mapper.xml
+  typeAliasesPackage: com.byk.rong.entity
+
+logging:
+  level:
+    root: info
+    com.byk.rong.mapper.*: debug
