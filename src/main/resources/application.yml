@@ -37,3 +37,12 @@ logging:
   level:
     root: info
     com.byk.rong.mapper.*: debug
+
+# 配置信息写在这里不安全，代码编译以后这里的信息还是明码显示
+com:
+  byk:
+    SMS:
+      appid: 1400101674
+      appkey: 599072c6b8af69616dcf230c96ee603e
+      templateId: 150939
+      smsSign: 稚子候门
